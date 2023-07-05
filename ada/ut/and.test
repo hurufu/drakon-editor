@@ -1,0 +1,21 @@
+package require tcltest
+source ada.tcl
+
+namespace import ::tcltest::*
+namespace import ::gen_ada::and
+
+test empty_lhs {} -body {
+    and {} x
+} -result { and x}
+
+test empty_rhs {} -body {
+    and myVar {}
+} -result {myVar and }
+
+test normal_case {} -body {
+    and k True
+} -result {k and True}
+
+test excesive_spaces_are_removed {} -body {
+    and {   k} {x   }
+} -result {k and x}

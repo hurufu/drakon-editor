@@ -1,0 +1,31 @@
+package require tcltest
+source ada.tcl
+
+namespace import ::tcltest::*
+namespace import ::gen_ada::signature
+
+test empty_input {} -body {
+    signature {} {}
+} -result {{Subprogram can't be anonymous} {} {}}
+
+
+test only_arguments {} -body {
+    signature { A: String } My_Proc
+} -result {{} {procedure My_Proc(A: String)} {}}
+
+
+test all_components {} -body {
+    signature {
+        -- Arguments
+        A: Integer
+                 -- Empty
+        B: Integer
+
+        return Integer -- Return type
+        declares R: Integer := 54
+        declares X: Integer
+        return String
+    } My_Func
+} -result {{} {function My_Func(A: Integer; B: Integer) return Integer} {{R: Integer := 54;} {X: Integer;}}}
+
+cleanupTests

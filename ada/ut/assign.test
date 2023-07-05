@@ -1,0 +1,21 @@
+package require tcltest
+source ada.tcl
+
+namespace import ::tcltest::*
+namespace import ::gen_ada::assign
+
+test empty_lhs {} -body {
+    assign {} 42
+} -match regexp -result { := 42;( --.*)?}
+
+test empty_rhs {} -body {
+    assign myVar {}
+} -match regexp -result {myVar := ;( --.*)?}
+
+test normal_case {} -body {
+    assign k {"Some value"}
+} -match regexp -result {k := "Some value";( --.*)?}
+
+test excesive_spaces_are_removed {} -body {
+    assign {k   } {   3.14  }
+} -match regexp -result {k := 3.14;( --.*)?}

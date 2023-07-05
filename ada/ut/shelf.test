@@ -1,0 +1,17 @@
+package require tcltest
+source ada.tcl
+
+namespace import ::tcltest::*
+namespace import ::gen_ada::shelf
+
+test empty {} -body {
+    shelf {} {}
+} -match regexp -result { := ;( --.*)?}
+
+test normal_case {} -body {
+    shelf bottom up
+} -match regexp -result {up := bottom;( --.*)?}
+
+test excesive_spaces_are_removed {} -body {
+    shelf {    	   x } y
+} -match regexp -result {y := x;( --.*)?}

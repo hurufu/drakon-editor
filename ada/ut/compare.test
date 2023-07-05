@@ -1,0 +1,22 @@
+package require tcltest
+source ada.tcl
+
+namespace import ::tcltest::*
+namespace import ::gen_ada::compare
+
+test empty {} -body {
+    compare {} {}
+} -result { = }
+
+test normal_case {} -body {
+    compare 32 x
+} -result {x = 32}
+
+test excesive_spaces_are_removed {} -body {
+    compare {
+
+		34} {    2
+
+
+}
+} -result {2 = 34}

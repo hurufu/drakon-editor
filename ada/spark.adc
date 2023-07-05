@@ -1,0 +1,2 @@
+Pragma Profile (Ravenscar);
+pragma SPARK_Mode (On);

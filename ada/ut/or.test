@@ -1,0 +1,21 @@
+package require tcltest
+source ada.tcl
+
+namespace import ::tcltest::*
+namespace import ::gen_ada::or
+
+test empty_lhs {} -body {
+    or {} x
+} -result { or x}
+
+test empty_rhs {} -body {
+    or myVar {}
+} -result {myVar or }
+
+test normal_case {} -body {
+    or k False
+} -result {k or False}
+
+test excesive_spaces_are_removed {} -body {
+    or {    	   x } y
+} -result {x or y}

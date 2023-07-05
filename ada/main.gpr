@@ -1,0 +1,20 @@
+project Main is
+
+
+    for Languages use ("Ada");
+    for Source_Dirs use (".");
+    for Object_Dir use "obj";
+    for Main use ("demo.adb");
+
+    package Builder is
+        for Global_Configuration_Pragmas use "spark.adc";
+    end Builder;
+
+    package Compiler is
+        Args := ("-flto", "-fstack-check", "-gnat2020", "-gnatVaM", "-gnatwaJ",
+                 "-gnata", "-gnateA", "-gnateE", "-gnateF",
+                 "-gnaty4aAbBCdfhiIklnOprStux", "-gnato", "-gnatd_F",
+                 "-g2", "-Og");
+    end Compiler;
+
+end Main;

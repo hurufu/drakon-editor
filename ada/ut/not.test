@@ -1,0 +1,18 @@
+package require tcltest
+source ada.tcl
+
+namespace import ::tcltest::*
+namespace import ::gen_ada::not
+
+test empty_lhs {} -body {
+    not {}
+} -result {not }
+
+test normal_case {} -body {
+    not k
+} -result {not k}
+
+test excesive_spaces_are_removed {} -body {
+    not {		k
+}
+} -result {not k}
