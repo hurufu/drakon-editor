@@ -13,6 +13,7 @@ cp -r ../generators .
 cp -r ../structure .
 cp -r ../msgs .
 cp -r ../docs .
+cp -r ../ada .
 mkdir tmp
 cp ../drakon_editor.tcl .
 cp ../drakon_gen.tcl .
