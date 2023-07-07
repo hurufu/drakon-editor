@@ -1974,7 +1974,7 @@ proc generate_function { gdb diagram_id callbacks nogoto to } {
 	set declares [ p.get_declares $gdb $diagram_id $has_iterators ]
 	set body [ concat $declares $body ]
     if {[string length $declares]} {
-        set body [concat $body "\nend -- workaround for not supported declarative sections\n"]
+        set body [concat $body " end;"]
     }
 
 	return [ list $diagram_id $name $real_sign $body ]

@@ -45,7 +45,7 @@ namespace eval gen_ada {
         if {$value == {}} {
             return "declare\n[string trim $name {_}]: $type; -- declare\nbegin"
         } else {
-            return "declare\n[string trim $name {_}]: $type := $value; -- declare\nbegin"
+            return "declare\n[string trim $name {_}]: $type; -- := $value; -- declare\nbegin"
         }
     }
     proc not {operand} {
