@@ -2,23 +2,22 @@ package require struct::stack
 
 namespace eval gen_ada {
 
-    variable block_stack
-    set block_stack [::struct::stack create]
+    set block_stack [::struct::stack]
 
     proc name {i f s} {return "-- [info level 2] i:$i f:$f s:$s"}
 
     proc assign {lhs rhs} {
-        return "[string trim $lhs] := [string trim $rhs]; -- assign"
+        return "[string trim [string trim $lhs] {_}] := [string trim $rhs]; -- assign"
     }
     proc bad_case {switch_var select_icon_number} {return "raise Bad_Case; -- bad_case"}
     proc block_close {output depth} {
         upvar 1 $output result
         variable block_stack
-        lappend result {*}[gen::make_indent $depth] "end [$block_stack pop]; -- block_close"
+        lappend result "[gen::make_indent $depth]end [$block_stack pop]; -- block_close"
     }
     proc comment {line} {return "-- $line"}
     proc compare {var constant} {
-        return "[string trim $constant] = [string trim $var]"
+        return "[string trim [string trim $constant] {_}] = [string trim [string trim $var] {_}]"
     }
     proc else_start {} {return "else -- else_start"}
     proc elseif_start {} {return "else if -- elseif_start"}
@@ -39,21 +38,21 @@ namespace eval gen_ada {
         return "for $for_it $for_var loop -- native_foreach"
     }
     proc and {lhs rhs} {
-        return "[string trim $lhs] and [string trim $rhs]"
+        return "[string trim [string trim $lhs] {_}] and [string trim [string trim $rhs] {_}]"
     }
     proc continue {} {return "-- continue"}
     proc declare {type name value} {
         if {$value == {}} {
-            return "$name: $type; -- declare"
+            return "declare\n[string trim $name {_}]: $type; -- declare\nbegin"
         } else {
-            return "$name: $type := $value; -- declare"
+            return "declare\n[string trim $name {_}]: $type := $value; -- declare\nbegin"
         }
     }
     proc not {operand} {
-        return "not [string trim $operand]"
+        return "not [string trim [string trim $operand] {_}]"
     }
     proc or {lhs rhs} {
-        return "[string trim $lhs] or [string trim $rhs]"
+        return "[string trim [string trim $lhs] {_}] or [string trim [string trim $rhs] {_}]"
     }
     proc pass {} {return "null; -- pass"}
     proc return_none {} {return "return; -- return_none"}
@@ -80,7 +79,7 @@ namespace eval gen_ada {
         return "loop -- while_start"
     }
     proc body {gdb diagram_id start_item node_list sorted incoming} {
-        cbody::generate_body $gdb $diagram_id $start_item $node_list $sorted $incoming [make_callbacks]
+        error {body callback isn't implemented}
     }
     proc break {} {return "exit -- break"}
     proc case_else {} {return "-- case_else"}
@@ -203,7 +202,7 @@ namespace eval gen_ada {
             puts $fhandle "$signature is\n[join $declarations "\n"]\nbegin"
             set lines [gen::indent $body 1]
             puts $fhandle $lines
-            puts $fhandle "end;"
+            puts $fhandle "end $name;"
         }
     }
 
