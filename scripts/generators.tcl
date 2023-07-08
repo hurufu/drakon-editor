@@ -1938,6 +1938,7 @@ proc generate_function { gdb diagram_id callbacks nogoto to } {
 	set generate_body [ get_callback $callbacks body ]
 	set commentator [ get_callback $callbacks comment ]
 	set enforce_nogoto [ get_optional_callback $callbacks enforce_nogoto ]
+	set body_end [ get_optional_callback $callbacks body_end ]
 
 	set start_info [ get_start_info $gdb $diagram_id ]
 	lassign $start_info start_icon params_icon name params_text start_item
@@ -1973,9 +1974,11 @@ proc generate_function { gdb diagram_id callbacks nogoto to } {
 	
 	set declares [ p.get_declares $gdb $diagram_id $has_iterators ]
 	set body [ concat $declares $body ]
-    if {[string length $declares]} {
-        set body [concat $body " end;"]
-    }
+	if {$body_end != ""} {
+		if {[string length $declares]} {
+			set body [concat $body [$body_end]]
+		}
+	}
 
 	return [ list $diagram_id $name $real_sign $body ]
 }
@@ -2669,6 +2672,7 @@ proc p.keywords { } {
 		can_glue
 		exit_door
 		if_block_end
+		body_end
 	}
 }
 

@@ -81,6 +81,9 @@ namespace eval gen_ada {
     proc body {gdb diagram_id start_item node_list sorted incoming} {
         error {body callback isn't implemented}
     }
+    proc body_end {} {
+        return "end;"
+    }
     proc break {} {return "exit -- break"}
     proc case_else {} {return "-- case_else"}
     proc case_end {next_text} {return "-- case_end $next_text"}
@@ -134,7 +137,7 @@ namespace eval gen_ada {
             case_value change_state comment compare continue declare
             elseif_start else_start for_check for_current for_declare for_incr
             for_init fsm_merge goto if_end if_start not or pass return_none
-            select select_end shelf shutdown signature tag while_start
+            select select_end shelf shutdown signature tag while_start body_end
         }
         set c {}
         foreach {a} $callback_names {
