@@ -103,7 +103,7 @@ namespace eval gen_ada {
         set a {}
         set r {}
         set d {}
-        set w ""
+        set w {}
         set visibility ""
         foreach l [split [regsub -all -line -- {--.*} $txt ""] "\n"] {
             set l [string trim $l]
@@ -111,7 +111,7 @@ namespace eval gen_ada {
                 {}           {}
                 {return *}   {lappend r " $l"}
                 {declare *}  {lappend d "[string range $l 7 end];"}
-                {with *}     {set w [concat $w $l]}
+                {with *}     {lappend w [string range $l 4 end]}
                 {separate}   {set visibility "external"}
                 default      {lappend a $l}
             }
@@ -125,7 +125,11 @@ namespace eval gen_ada {
         if {[llength $r]} {
             set type "function"
         }
-        set ret [list {} "$visibility\n$type $name$args_text[lindex $r 0]\n$w\n[join $d "\n"]"]
+        set with_string ""
+        if {[llength $w]} {
+            set with_string "with [join $w ","]"
+        }
+        set ret [list {} "$visibility\n$type $name$args_text[lindex $r 0]\n$with_string\n[join $d "\n"]"]
         return $ret
     }
 
