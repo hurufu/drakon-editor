@@ -38,7 +38,7 @@ namespace eval gen_ada {
         return "for $for_it $for_var loop -- native_foreach"
     }
     proc and {lhs rhs} {
-        return "[string trim [string trim $lhs] {_}] and [string trim [string trim $rhs] {_}]"
+        return "[string trim [string trim $lhs] {_}] and then [string trim [string trim $rhs] {_}]"
     }
     proc continue {} {return "-- continue"}
     proc declare {type name value} {
@@ -52,7 +52,7 @@ namespace eval gen_ada {
         return "not [string trim [string trim $operand] {_}]"
     }
     proc or {lhs rhs} {
-        return "[string trim [string trim $lhs] {_}] or [string trim [string trim $rhs] {_}]"
+        return "[string trim [string trim $lhs] {_}] or else [string trim [string trim $rhs] {_}]"
     }
     proc pass {} {return "null; -- pass"}
     proc return_none {} {return "return; -- return_none"}
