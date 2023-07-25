@@ -1774,7 +1774,7 @@ proc make_declarations { parameters keyword keyword_name N } {
 proc make_indent { N } {
     #item 1679
     set indent_length \
-    [ expr "$N * 4" ]
+    [ expr "$N * 3" ]
     #item 1678
     set indent \
     [ string repeat " " $indent_length ]
