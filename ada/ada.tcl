@@ -105,6 +105,7 @@ namespace eval gen_ada {
         set d {}
         set w {}
         set visibility ""
+        set txt [regsub -all -- {\n +} $txt " "]
         foreach l [split [regsub -all -line -- {--.*} $txt ""] "\n"] {
             set l [string trim $l]
             switch -glob $l {
