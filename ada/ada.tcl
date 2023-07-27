@@ -209,7 +209,7 @@ namespace eval gen_ada {
             lassign $f diagram_id name func_description body
             lassign [split $func_description "\n"] visibility signature aspect
             if {[string length $visibility] == 0} {
-                puts $fh "    $signature $aspect;"
+                puts $fh "   $signature $aspect;"
             }
         }
     }
@@ -219,10 +219,14 @@ namespace eval gen_ada {
             lassign $function diagram_id name func_description body
             puts $fhandle ""
             set declarations [lassign [split $func_description "\n"] visibility signature aspect]
-            puts $fhandle "$signature is\n[join $declarations "\n"]\nbegin"
-            set lines [gen::indent $body 1]
+            if {[string length [lindex $declarations 0]]} {
+                puts $fhandle "   $signature is[join [list {} {*}$declarations] "\n      "]\n   begin"
+            } else {
+                puts $fhandle "   $signature is\n   begin"
+            }
+            set lines [gen::indent $body 2]
             puts $fhandle $lines
-            puts $fhandle "end $name;"
+            puts $fhandle "   end $name;"
         }
     }
 

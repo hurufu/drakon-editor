@@ -1887,7 +1887,7 @@ proc add_lines { result before lines after base depth } {
 proc make_indent { depth } {
 	set indent ""
 	repeat i $depth {
-		append indent "    "
+		append indent "   "
 	}
 	return $indent
 }
