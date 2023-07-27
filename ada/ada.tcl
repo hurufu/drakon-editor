@@ -120,7 +120,7 @@ namespace eval gen_ada {
         }
         set args_text [join $a "; "]
         if {[llength $a]} {
-            set args_text "\($args_text\)"
+            set args_text " \($args_text\)"
         }
 
         set type "procedure"
@@ -129,7 +129,7 @@ namespace eval gen_ada {
         }
         set with_string ""
         if {[llength $w]} {
-            set with_string "with [join $w ","]"
+            set with_string " with [join $w ","]"
         }
         set ret [list {} "$visibility\n$type $name$args_text[lindex $r 0]\n$with_string\n[join $d "\n"]"]
         return $ret
@@ -199,7 +199,7 @@ namespace eval gen_ada {
             lassign $f diagram_id name func_description body
             lassign [split $func_description "\n"] visibility signature aspect
             if {$visibility == "external"} {
-                puts $fh "    $signature $aspect;"
+                puts $fh "    $signature$aspect;"
             }
         }
     }
@@ -209,7 +209,7 @@ namespace eval gen_ada {
             lassign $f diagram_id name func_description body
             lassign [split $func_description "\n"] visibility signature aspect
             if {[string length $visibility] == 0} {
-                puts $fh "   $signature $aspect;"
+                puts $fh "   $signature$aspect;"
             }
         }
     }
