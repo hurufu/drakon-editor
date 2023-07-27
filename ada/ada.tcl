@@ -111,7 +111,7 @@ namespace eval gen_ada {
             switch -glob $l {
                 {}           {}
                 {return *}   {lappend r " $l"}
-                {declare *}  {lappend d "[string range $l 7 end];"}
+                {declare *}  {lappend d "[string range $l 8 end];"}
                 {use *}      {lappend d "$l;"}
                 {with *}     {lappend w [string range $l 4 end]}
                 {separate}   {set visibility "external"}
