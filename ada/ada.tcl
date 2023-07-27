@@ -199,7 +199,7 @@ namespace eval gen_ada {
             lassign $f diagram_id name func_description body
             lassign [split $func_description "\n"] visibility signature aspect
             if {$visibility == "external"} {
-                puts $fh "    $signature$aspect;"
+                puts $fh "   $signature$aspect;"
             }
         }
     }
